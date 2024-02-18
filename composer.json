@@ -14,6 +14,8 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "owenvoke/blade-fontawesome": "^2.5",
+        "ryangjchandler/blade-tabler-icons": "^2.2",
         "spatie/laravel-permission": "^6.3"
     },
     "require-dev": {

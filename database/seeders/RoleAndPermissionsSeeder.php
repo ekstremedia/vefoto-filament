@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -56,6 +57,14 @@ class RoleAndPermissionsSeeder extends Seeder
         $member->givePermissionTo([
             $viewArticles
         ]);
+
+        $admin =User::where('id', 1)->first();
+
+        $admin->assignRole('Admin');
+
+        $test =User::where('id', 2)->first();
+
+        $test->assignRole('Member');
 
     }
 }

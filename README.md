@@ -13,3 +13,5 @@ or
 
     php artisan migrate:fresh --seed
 
+WIP role permission policy:
+https://www.youtube.com/watch?v=WbCEIyjh61A

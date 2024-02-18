@@ -5,20 +5,21 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\RoleResource\Pages;
 use App\Filament\Resources\RoleResource\RelationManagers;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Spatie\Permission\Models\Role;
 
 class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
     protected static ?string $navigationGroup = 'Admin';
     protected static ?int $navigationSort = 2;
@@ -27,9 +28,15 @@ class RoleResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                ->unique(ignoreRecord: true)
-                ->required()
+                TextInput::make('name')
+                    ->minLength(2)
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true)
+                    ->required(),
+                Select::make('permissions')
+                    ->multiple()
+                    ->relationship('permissions', 'name')
+                    ->preload()
             ]);
     }
 
@@ -38,12 +45,18 @@ class RoleResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->searchable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

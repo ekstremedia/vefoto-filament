@@ -26,5 +26,16 @@ class UserSeeder extends Seeder
             'bio' => 'I am a developer',
             'email_verified_at' => now(),
         ]);
+        DB::table('users')->insert([
+            'name' => 'Test user',
+            'email' => 'test@gmail.com',
+            'password' => Hash::make('test@gmail.com'),
+            'phone' => '3421423',
+            'address' => 'Kringelveien 265',
+            'city' => 'Sortland',
+            'post_code' => '8407',
+            'bio' => 'I am not a developer',
+            'email_verified_at' => now(),
+        ]);
     }
 }
